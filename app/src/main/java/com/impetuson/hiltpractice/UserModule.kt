@@ -1,18 +1,23 @@
 package com.impetuson.hiltpractice
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 
 @InstallIn(ActivityComponent::class)
 @Module
-class UserModule {
-    @Provides
-    fun providesUserRepository(): UserRepository {
-        return FirebaseRepository()
-    }
+abstract class UserModule {
+    @Binds
+    @Named("sql")
+    abstract fun bindsUserRepository(sqlRepository: SQLRepository): UserRepository
+
+    @Binds
+    @CustomFirebaseQualifier
+    abstract fun bindsSQLRepository(firebaseRepository: FirebaseRepository): UserRepository
 }
 
 /*
