@@ -3,8 +3,10 @@ package com.impetuson.hiltpractice
 import android.util.Log
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(){
+class UserRepository @Inject constructor(
+    private val firebaseService: FirebaseService
+){
     fun saveUser(email: String, password: String){
-        Log.d("SAMPLEAPP","User saved in DB")
+        firebaseService.saveToFirestore(email,password)
     }
 }
